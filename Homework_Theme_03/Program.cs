@@ -129,155 +129,179 @@ namespace Homework_Theme_03
                 }
             }
 
-            // Выбор количества костей
-            Console.WriteLine("Выберете количество игральных костей.");
-            Console.WriteLine("Значение по умолчанию 1, но можно выбрать до 3.");
-            Console.WriteLine("В зависимости от этого будет различаться значение уменшаемого числа.");
-            Console.WriteLine("1 кость - 50 (быстрая игра), 2 - 70, 3 - 120 (ОЧЕНЬ долгая игра - шанс на победу 1 к 216).");
-            Console.WriteLine("В случай если значение числа меньше количества костей,");
-            Console.WriteLine("игровое значение примит значение количества игровых костей.");
             
-            int countGameBonds = 1;
-            stupidPlayer = 0;
-            while (true)
-            {
-                try
-                {
-                    countGameBonds = Convert.ToInt32(Console.ReadLine());
-                    if (countGameBonds == 1 || countGameBonds == 2 || countGameBonds == 3)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        stupidPlayer++;
-                        Console.WriteLine("Не верно указано количество игральных костей!");
-                        Console.WriteLine($"Осталось попыток - {3 - stupidPlayer}.");
-                        if (stupidPlayer == 3)
-                        {
-                            countGameBonds = 1;
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Укажите количество костей, иначе будет принято значение по умолчанию.");
-                        }
-                        continue;
-                    }
-                }
-                catch (Exception)
-                {
-                    stupidPlayer++;
-                    Console.WriteLine("Не верно указано количество игральных костей!");
-                    Console.WriteLine($"Осталось попыток - {3 - stupidPlayer}.");
-                    if (stupidPlayer == 3)
-                    {
-                        countGameBonds = 1;
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Укажите количество костей, иначе будет принято значение по умолчанию.");
-                    }
-                }
-            }
-
-            int gameCounter;
-            if (countGameBonds == 1)
-            {
-                gameCounter = 50;
-            }
-            else if (countGameBonds == 2)
-            {
-                gameCounter = 70;
-            }
-            else
-            {
-                gameCounter = 120;
-            }
 
             // Имя игрока и тело игры для режима против компьютера
             Random randomize = new Random();
             int brakenPoints;
+            bool game = true;
             int sumPointBonds = 0; // сюда складываем очки выброшенные на костях, если их несколько
             if (gameMode == 2)
             {
                 Console.WriteLine("Укажите имя игрока :");
                 string player1 = Console.ReadLine();
 
-                while (true)
+                while (game)
                 {
-                    // ходит игрок в игре против компа
-                    Console.WriteLine("Ход игрока (нажмите Enter)");
-                    Console.ReadKey();
-                    for (int i = 0; i < countGameBonds; i++) // суммирует поличество выброшенных очков
+
+                    // Выбор количества костей
+                    Console.WriteLine("Выберете количество игральных костей.");
+                    Console.WriteLine("Значение по умолчанию 1, но можно выбрать до 3.");
+                    Console.WriteLine("В зависимости от этого будет различаться значение уменшаемого числа.");
+                    Console.WriteLine("1 кость - 50 (быстрая игра), 2 - 70, 3 - 120 (ОЧЕНЬ долгая игра - шанс на победу 1 к 216).");
+                    Console.WriteLine("В случай если значение числа меньше количества костей,");
+                    Console.WriteLine("игровое значение примит значение количества игровых костей.");
+
+                    int countGameBonds = 1;
+                    stupidPlayer = 0;
+                    while (true)
                     {
-                        brakenPoints = randomize.Next(1, 7);
-                        Console.WriteLine(brakenPoints);
-                        sumPointBonds += brakenPoints;
+                        try
+                        {
+                            countGameBonds = Convert.ToInt32(Console.ReadLine());
+                            if (countGameBonds == 1 || countGameBonds == 2 || countGameBonds == 3)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                stupidPlayer++;
+                                Console.WriteLine("Не верно указано количество игральных костей!");
+                                Console.WriteLine($"Осталось попыток - {3 - stupidPlayer}.");
+                                if (stupidPlayer == 3)
+                                {
+                                    countGameBonds = 1;
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Укажите количество костей, иначе будет принято значение по умолчанию.");
+                                }
+                                continue;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            stupidPlayer++;
+                            Console.WriteLine("Не верно указано количество игральных костей!");
+                            Console.WriteLine($"Осталось попыток - {3 - stupidPlayer}.");
+                            if (stupidPlayer == 3)
+                            {
+                                countGameBonds = 1;
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Укажите количество костей, иначе будет принято значение по умолчанию.");
+                            }
+                        }
                     }
 
-                    // основной алгоритм
-                    if (gameCounter == sumPointBonds) // если игровое значение равно сумме брошенных костей игрок победил
+                    int gameCounter;
+                    if (countGameBonds == 1)
                     {
-                        gameCounter = 0;
-                        WriteLineCentered("===========================================================");
-                        WriteLineCentered("Поздравляем!!!");
-                        WriteLineCentered($"Победил игрок {player1}!!!");
-                        WriteLineCentered("===========================================================");
+                        gameCounter = 50;
+                    }
+                    else if (countGameBonds == 2)
+                    {
+                        gameCounter = 70;
+                    }
+                    else
+                    {
+                        gameCounter = 120;
+                    }
+
+                    // тело игры
+                    while (true)
+                    {
+                        // ходит игрок в игре против компа
+                        Console.WriteLine("Ход игрока (нажмите Enter)");
                         Console.ReadKey();
-                        break;
+                        for (int i = 0; i < countGameBonds; i++) // суммирует поличество выброшенных очков
+                        {
+                            brakenPoints = randomize.Next(1, 7);
+                            Console.WriteLine(brakenPoints);
+                            sumPointBonds += brakenPoints;
+                        }
+
+                        // основной алгоритм
+                        if (gameCounter == sumPointBonds) // если игровое значение равно сумме брошенных костей игрок победил
+                        {
+                            gameCounter = 0;
+                            WriteLineCentered("===========================================================");
+                            WriteLineCentered("Поздравляем!!!");
+                            WriteLineCentered($"Победил игрок {player1}!!!");
+                            WriteLineCentered("===========================================================");
+                            Console.ReadKey();
+                            break;
+                        }
+                        else if (gameCounter < countGameBonds) // если игровое значение меньше количества, то игровое значение 
+                        {                                       //приравнивает к количеству костей
+                            gameCounter = countGameBonds;
+                        }
+                        else if (gameCounter < sumPointBonds) // если игровое значение меньше выброшенного количество очков, то ничего не делать
+                        {
+
+                        }
+                        else
+                        {
+                            gameCounter -= sumPointBonds;
+                        }
+                        Console.WriteLine($"Осталось очков - {gameCounter}!");
+                        sumPointBonds = 0; // обнуляем сумму брошенных костей
+
+                        // ходит компьютер
+                        Console.WriteLine("Ход компьютера (нажмите Enter)");
+                        Console.ReadKey();
+                        for (int i = 0; i < countGameBonds; i++) // суммирует поличество выброшенных очков
+                        {
+                            brakenPoints = randomize.Next(1, 7);
+                            Console.WriteLine(brakenPoints);
+                            sumPointBonds += brakenPoints;
+                        }
+
+                        // основной алгоритм
+                        if (gameCounter == sumPointBonds) // если игровое значение равно сумме брошенных костей игрок победил
+                        {
+                            gameCounter = 0;
+                            WriteLineCentered("===========================================================");
+                            WriteLineCentered($"Победил компьютер!!!");
+                            WriteLineCentered("===========================================================");
+                            Console.ReadKey();
+                            break;
+                        }
+                        else if (gameCounter < countGameBonds) // если игровое значение меньше количества, то игровое значение 
+                        {                                       //приравнивает к количеству костей
+                            gameCounter = countGameBonds;
+                        }
+                        else if (gameCounter < sumPointBonds) // если игровое значение меньше выброшенного количество очков, то ничего не делать
+                        {
+
+                        }
+                        else
+                        {
+                            gameCounter -= sumPointBonds;
+                        }
+                        Console.WriteLine($"Осталось очков - {gameCounter}!");
+                        sumPointBonds = 0; // обнуляем сумму брошенных костей
                     }
-                    else if (gameCounter < countGameBonds) // если игровое значение меньше количества, то игровое значение 
-                    {                                       //приравнивает к количеству костей
-                        gameCounter = countGameBonds;
-                    }
-                    else if (gameCounter < sumPointBonds) // если игровое значение меньше выброшенного количество очков, то ничего не делать
+
+                    // запрос на повтор
+                    Console.WriteLine("Желаете сыграть ещё раз? (Да/Нет)");
+                    string answerRepeatGame = Console.ReadLine();
+                    if (answerRepeatGame.StartsWith("Y") || 
+                        answerRepeatGame.StartsWith("y") || 
+                        answerRepeatGame.StartsWith("Д") ||
+                        answerRepeatGame.StartsWith("д"))
                     {
 
                     }
                     else
                     {
-                        gameCounter -= sumPointBonds;
+                        game = false;
                     }
-                    Console.WriteLine($"Осталось очков - {gameCounter}!");
-                    sumPointBonds = 0; // обнуляем сумму брошенных костей
-
-                    // ходит компьютер
-                    Console.WriteLine("Ход компьютера (нажмите Enter)");
-                    Console.ReadKey();
-                    for (int i = 0; i < countGameBonds; i++) // суммирует поличество выброшенных очков
-                    {
-                        brakenPoints = randomize.Next(1, 7);
-                        Console.WriteLine(brakenPoints);
-                        sumPointBonds += brakenPoints;
-                    }
-
-                    // основной алгоритм
-                    if (gameCounter == sumPointBonds) // если игровое значение равно сумме брошенных костей игрок победил
-                    {
-                        gameCounter = 0;
-                        WriteLineCentered("===========================================================");
-                        WriteLineCentered($"Победил компьютер!!!");
-                        WriteLineCentered("===========================================================");
-                        Console.ReadKey();
-                        break;
-                    }
-                    else if (gameCounter < countGameBonds) // если игровое значение меньше количества, то игровое значение 
-                    {                                       //приравнивает к количеству костей
-                        gameCounter = countGameBonds;
-                    }
-                    else if (gameCounter < sumPointBonds) // если игровое значение меньше выброшенного количество очков, то ничего не делать
-                    {
-
-                    }
-                    else
-                    {
-                        gameCounter -= sumPointBonds;
-                    }
-                    Console.WriteLine($"Осталось очков - {gameCounter}!");
-                    sumPointBonds = 0; // обнуляем сумму брошенных костей
                 }
+                
             }
             else
             {
@@ -286,81 +310,168 @@ namespace Homework_Theme_03
                 Console.WriteLine("Укажите имя второго игрока :");
                 string player2 = Console.ReadLine();
 
-                while (true)
+                while (game)
                 {
-                    // ходит игрок 1
-                    Console.WriteLine($"Ход игрока {player1} (нажмите Enter)");
-                    Console.ReadKey();
-                    for (int i = 0; i < countGameBonds; i++) // суммирует поличество выброшенных очков
+                    // Выбор количества костей
+                    Console.WriteLine("Выберете количество игральных костей.");
+                    Console.WriteLine("Значение по умолчанию 1, но можно выбрать до 3.");
+                    Console.WriteLine("В зависимости от этого будет различаться значение уменшаемого числа.");
+                    Console.WriteLine("1 кость - 50 (быстрая игра), 2 - 70, 3 - 120 (ОЧЕНЬ долгая игра - шанс на победу 1 к 216).");
+                    Console.WriteLine("В случай если значение числа меньше количества костей,");
+                    Console.WriteLine("игровое значение примит значение количества игровых костей.");
+
+                    int countGameBonds = 1;
+                    stupidPlayer = 0;
+                    while (true)
                     {
-                        brakenPoints = randomize.Next(1, 7);
-                        Console.WriteLine(brakenPoints);
-                        sumPointBonds += brakenPoints;
+                        try
+                        {
+                            countGameBonds = Convert.ToInt32(Console.ReadLine());
+                            if (countGameBonds == 1 || countGameBonds == 2 || countGameBonds == 3)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                stupidPlayer++;
+                                Console.WriteLine("Не верно указано количество игральных костей!");
+                                Console.WriteLine($"Осталось попыток - {3 - stupidPlayer}.");
+                                if (stupidPlayer == 3)
+                                {
+                                    countGameBonds = 1;
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Укажите количество костей, иначе будет принято значение по умолчанию.");
+                                }
+                                continue;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            stupidPlayer++;
+                            Console.WriteLine("Не верно указано количество игральных костей!");
+                            Console.WriteLine($"Осталось попыток - {3 - stupidPlayer}.");
+                            if (stupidPlayer == 3)
+                            {
+                                countGameBonds = 1;
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Укажите количество костей, иначе будет принято значение по умолчанию.");
+                            }
+                        }
                     }
 
-                    // основной алгоритм
-                    if (gameCounter == sumPointBonds) // если игровое значение равно сумме брошенных костей игрок победил
+                    int gameCounter;
+                    if (countGameBonds == 1)
                     {
-                        gameCounter = 0;
-                        WriteLineCentered("===========================================================");
-                        WriteLineCentered("Поздравляем!!!");
-                        WriteLineCentered($"Победил игрок {player1}!!!");
-                        WriteLineCentered("===========================================================");
+                        gameCounter = 50;
+                    }
+                    else if (countGameBonds == 2)
+                    {
+                        gameCounter = 70;
+                    }
+                    else
+                    {
+                        gameCounter = 120;
+                    }
+
+                    // тело игры
+                    while (true)
+                    {
+                        // ходит игрок 1
+                        Console.WriteLine($"Ход игрока {player1} (нажмите Enter)");
                         Console.ReadKey();
-                        break;
+                        for (int i = 0; i < countGameBonds; i++) // суммирует поличество выброшенных очков
+                        {
+                            brakenPoints = randomize.Next(1, 7);
+                            Console.WriteLine(brakenPoints);
+                            sumPointBonds += brakenPoints;
+                        }
+
+                        // основной алгоритм
+                        if (gameCounter == sumPointBonds) // если игровое значение равно сумме брошенных костей игрок победил
+                        {
+                            gameCounter = 0;
+                            WriteLineCentered("===========================================================");
+                            WriteLineCentered("Поздравляем!!!");
+                            WriteLineCentered($"Победил игрок {player1}!!!");
+                            WriteLineCentered("===========================================================");
+                            Console.ReadKey();
+                            break;
+                        }
+                        else if (gameCounter < countGameBonds) // если игровое значение меньше количества, то игровое значение 
+                        {                                       //приравнивает к количеству костей
+                            gameCounter = countGameBonds;
+                        }
+                        else if (gameCounter < sumPointBonds) // если игровое значение меньше выброшенного количество очков, то ничего не делать
+                        {
+
+                        }
+                        else
+                        {
+                            gameCounter -= sumPointBonds;
+                        }
+                        Console.WriteLine($"Осталось очков - {gameCounter}!");
+                        sumPointBonds = 0; // обнуляем сумму брошенных костей
+
+                        // ходит игрок 2
+                        Console.WriteLine($"Ход игрока {player2} (нажмите Enter)");
+                        Console.ReadKey();
+                        for (int i = 0; i < countGameBonds; i++) // суммирует поличество выброшенных очков
+                        {
+                            brakenPoints = randomize.Next(1, 7);
+                            Console.WriteLine(brakenPoints);
+                            sumPointBonds += brakenPoints;
+                        }
+
+                        // основной алгоритм
+                        if (gameCounter == sumPointBonds) // если игровое значение равно сумме брошенных костей игрок победил
+                        {
+                            gameCounter = 0;
+                            WriteLineCentered("===========================================================");
+                            WriteLineCentered("Поздравляем!!!");
+                            WriteLineCentered($"Победил игрок {player2}!!!");
+                            WriteLineCentered("===========================================================");
+                            Console.ReadKey();
+                            break;
+                        }
+                        else if (gameCounter < countGameBonds) // если игровое значение меньше количества, то игровое значение 
+                        {                                       //приравнивает к количеству костей
+                            gameCounter = countGameBonds;
+                        }
+                        else if (gameCounter < sumPointBonds) // если игровое значение меньше выброшенного количество очков, то ничего не делать
+                        {
+
+                        }
+                        else
+                        {
+                            gameCounter -= sumPointBonds;
+                        }
+                        Console.WriteLine($"Осталось очков - {gameCounter}!");
+                        sumPointBonds = 0;
+
                     }
-                    else if (gameCounter < countGameBonds) // если игровое значение меньше количества, то игровое значение 
-                    {                                       //приравнивает к количеству костей
-                        gameCounter = countGameBonds;
-                    }
-                    else if (gameCounter < sumPointBonds) // если игровое значение меньше выброшенного количество очков, то ничего не делать
+
+                    // запрос на повтор
+                    Console.WriteLine("Желаете сыграть ещё раз? (Да/Нет)");
+                    string answerRepeatGame = Console.ReadLine();
+                    if (answerRepeatGame.StartsWith("Y") ||
+                        answerRepeatGame.StartsWith("y") ||
+                        answerRepeatGame.StartsWith("Д") ||
+                        answerRepeatGame.StartsWith("д"))
                     {
 
                     }
                     else
                     {
-                        gameCounter -= sumPointBonds;
+                        game = false;
                     }
-                    Console.WriteLine($"Осталось очков - {gameCounter}!");
-                    sumPointBonds = 0; // обнуляем сумму брошенных костей
-
-                    // ходит игрок 2
-                    Console.WriteLine($"Ход игрока {player2} (нажмите Enter)");
-                    Console.ReadKey();
-                    for (int i = 0; i < countGameBonds; i++) // суммирует поличество выброшенных очков
-                    {
-                        brakenPoints = randomize.Next(1, 7);
-                        Console.WriteLine(brakenPoints);
-                        sumPointBonds += brakenPoints;
-                    }
-
-                    // основной алгоритм
-                    if (gameCounter == sumPointBonds) // если игровое значение равно сумме брошенных костей игрок победил
-                    {
-                        gameCounter = 0;
-                        WriteLineCentered("===========================================================");
-                        WriteLineCentered("Поздравляем!!!");
-                        WriteLineCentered($"Победил игрок {player2}!!!");
-                        WriteLineCentered("===========================================================");
-                        Console.ReadKey();
-                        break;
-                    }
-                    else if (gameCounter < countGameBonds) // если игровое значение меньше количества, то игровое значение 
-                    {                                       //приравнивает к количеству костей
-                        gameCounter = countGameBonds;
-                    }
-                    else if (gameCounter < sumPointBonds) // если игровое значение меньше выброшенного количество очков, то ничего не делать
-                    {
-
-                    }
-                    else
-                    {
-                        gameCounter -= sumPointBonds;
-                    }
-                    Console.WriteLine($"Осталось очков - {gameCounter}!");
-                    sumPointBonds = 0;
-
                 }
+                
 
             }
         }
